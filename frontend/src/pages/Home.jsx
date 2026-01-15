@@ -1,6 +1,6 @@
 import Header from '../components/Header';
 import Ranking from '../components/Ranking';
-import { useRatings } from '../hooks/useRatings';
+import useRatings from '../hooks/useRatings';
 
 const Home = () => {
   const { players } = useRatings();

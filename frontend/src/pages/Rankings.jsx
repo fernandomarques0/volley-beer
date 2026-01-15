@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getPlayers } from '../services/api';
+import {fetchPlayers as getPlayers} from '../services/api';
 import PlayerCard from '../components/PlayerCard';
-import './Rankings.css'; // Optional: Add styles for the rankings page
 
 const Rankings = () => {
   const [players, setPlayers] = useState([]);

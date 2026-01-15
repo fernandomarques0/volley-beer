@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPlayerDetails } from '../services/api';
+import { fetchPlayers, fetchPlayerRatings, fetchAverageRating } from '../services/api';
 import PlayerCard from '../components/PlayerCard';
 import VotingInterface from '../components/VotingInterface';
 
 const PlayerDetails = () => {
-  const { playerId } = useParams();
+  const { id } = useParams();
   const [player, setPlayer] = useState(null);
+  const [ratings, setRatings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPlayerDetails = async () => {
       try {
-        const data = await getPlayerDetails(playerId);
-        setPlayer(data);
+        const players = await fetchPlayers();
+        const foundPlayer = players.find(p => p._id === id || p.id === id);
+        const playerRatings = await fetchPlayerRatings(id);
+        const avgData = await fetchAverageRating(id);
+        
+        setPlayer({ ...foundPlayer, avgRating: avgData.avg, ratingsCount: avgData.count });
+        setRatings(playerRatings);
       } catch (err) {
         setError('Failed to fetch player details');
       } finally {
@@ -23,7 +29,7 @@ const PlayerDetails = () => {
     };
 
     fetchPlayerDetails();
-  }, [playerId]);
+  }, [id]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -33,7 +39,7 @@ const PlayerDetails = () => {
     <div>
       <h1>{player.name}</h1>
       <PlayerCard player={player} />
-      <VotingInterface playerId={playerId} />
+      <VotingInterface playerId={id} />
     </div>
   );
 };

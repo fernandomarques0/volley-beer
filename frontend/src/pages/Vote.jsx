@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useRatings } from '../hooks/useRatings';
-import { VotingInterface } from '../components/VotingInterface';
-import { PlayerCard } from '../components/PlayerCard';
+import useRatings from '../hooks/useRatings';
+import VotingInterface from '../components/VotingInterface';
+import PlayerCard from '../components/PlayerCard';
 
 const Vote = () => {
   const { players, fetchPlayers } = useRatings();
