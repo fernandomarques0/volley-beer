@@ -1,0 +1,69 @@
+.rating-stars {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.stars-display {
+  display: flex;
+  gap: 0.25rem;
+  font-size: 2.5rem;
+}
+
+.star-container {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+
+.star-half {
+  cursor: pointer;
+  color: #d1d5db;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: auto;
+  display: inline-block;
+  position: relative;
+}
+
+.star-half.left {
+  clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+  position: absolute;
+  left: 0;
+}
+
+.star-half.right {
+  clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+  margin-left: 0;
+}
+
+.star-half:hover {
+  transform: scale(1.1);
+  color: #fbbf24;
+}
+
+.star-half.filled {
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+}
+
+.star-container:hover .star-half {
+  color: #fbbf24;
+  opacity: 0.7;
+}
+
+.star-container:hover .star-half.filled {
+  opacity: 1;
+}
+
+.rating-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  min-width: 3rem;
+  text-align: center;
+}

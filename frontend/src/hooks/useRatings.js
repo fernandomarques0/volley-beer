@@ -1,40 +1,47 @@
 import { useState, useEffect } from 'react';
-import { fetchPlayers, submitRating } from '../services/api';
+import { fetchPlayers as getPlayers, submitRating } from '../services/api';
 
 const useRatings = () => {
   const [players, setPlayers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const loadPlayers = async () => {
-      try {
-        const data = await fetchPlayers();
-        setPlayers(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadPlayers();
-  }, []);
-
-  const ratePlayer = async (playerId, rating) => {
+  const fetchPlayers = async () => {
+    setLoading(true);
+    setError(null);
     try {
-      await submitRating(playerId, rating);
-      setPlayers((prevPlayers) =>
-        prevPlayers.map((player) =>
-          player._id === playerId ? { ...player, ratingsCount: player.ratingsCount + 1 } : player
-        )
-      );
+      const data = await getPlayers();
+      setPlayers(data);
+      return data;
     } catch (err) {
-      setError(err);
+      setError(err.message);
+      console.error('Error fetching players:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { players, loading, error, ratePlayer };
+  const ratePlayer = async (playerId, value, rater) => {
+    try {
+      await submitRating(playerId, value, rater);
+      await fetchPlayers(); // Recarrega os jogadores após votar
+    } catch (err) {
+      setError(err.message);
+      console.error('Error rating player:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlayers();
+  }, []);
+
+  return {
+    players,
+    loading,
+    error,
+    fetchPlayers,
+    ratePlayer,
+  };
 };
 
 export default useRatings;

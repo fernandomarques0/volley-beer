@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchPlayers, fetchPlayerRatings, fetchAverageRating } from '../services/api';
-import PlayerCard from '../components/PlayerCard';
-import VotingInterface from '../components/VotingInterface';
+import PlayerCard from '../components/PlayerCard/PlayerCard';
+import VotingInterface from '../components/VotingInterface/VotingInterface';
 
 const PlayerDetails = () => {
   const { id } = useParams();

@@ -1,9 +1,10 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import Vote from './pages/Vote';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Home from './pages/Home/Home';
+import Vote from './pages/Vote/Vote';
 import Rankings from './pages/Rankings';
+import Draw from './pages/Draw/Draw';
 import PlayerDetails from './pages/PlayerDetails';
-import Header from './components/Header';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/vote" element={<Vote />} />
         <Route path="/rankings" element={<Rankings />} />
+        <Route path="/draw" element={<Draw />} />
         <Route path="/player/:id" element={<PlayerDetails />} />
       </Routes>
     </Router>

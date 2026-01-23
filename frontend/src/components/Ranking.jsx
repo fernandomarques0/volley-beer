@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchPlayers } from '../services/api';
-import PlayerCard from './PlayerCard';
+import PlayerCard from './PlayerCard/PlayerCard';
 
 const Ranking = () => {
   const [players, setPlayers] = useState([]);

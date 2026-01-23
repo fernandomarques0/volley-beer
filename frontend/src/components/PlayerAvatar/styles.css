@@ -1,0 +1,38 @@
+.player-avatar-icon {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.player-avatar-icon.small {
+  width: 32px;
+  height: 32px;
+}
+
+.player-avatar-icon.medium {
+  width: 50px;
+  height: 50px;
+}
+
+.player-avatar-icon.large {
+  width: 80px;
+  height: 80px;
+}
+
+.player-avatar-icon.male {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+}
+
+.player-avatar-icon.female {
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+  color: white;
+}
+
+.player-avatar-icon svg {
+  width: 60%;
+  height: 60%;
+}

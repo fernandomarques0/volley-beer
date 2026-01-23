@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000'; // Adjust the URL as needed
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export const fetchPlayers = async () => {
   try {
@@ -21,6 +21,18 @@ export const submitRating = async (playerId, value, rater) => {
     return response.data;
   } catch (error) {
     throw new Error('Error submitting rating');
+  }
+};
+
+export const submitBatchRatings = async (ratings, rater) => {
+  try {
+    const response = await axios.post(`${API_URL}/ratings/batch`, {
+      ratings,
+      rater,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Error submitting batch ratings');
   }
 };
 
