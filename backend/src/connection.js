@@ -1,24 +1,43 @@
 import mongoose from 'mongoose';
-import { logger } from './utils/logger.js';
-import { config } from '../config.js';
 
 export async function connectDB() {
-  if (!config.mongoUri) throw new Error('Missing MONGODB_URI');
-  try {
-    mongoose.set('strictQuery', true);
-    mongoose.connection.on('connected', () => logger.info('MongoDB connected'));
-    mongoose.connection.on('disconnected', () => logger.warn('MongoDB disconnected'));
-    mongoose.connection.on('error', (err) => logger.error('MongoDB error', { error: err.message }));
-    await mongoose.connect(config.mongoUri, { serverSelectionTimeoutMS: 10000 });
-  } catch (err) {
-    logger.error('Mongo connection failed', { error: err.message });
-    throw err;
+  const mongoUri = process.env.MONGODB_URI;
+  
+  if (!mongoUri) {
+    throw new Error('MONGODB_URI não configurada nas variáveis de ambiente');
   }
 
-  // graceful shutdown
-  process.on('SIGINT', async () => {
-    await mongoose.connection.close();
-    logger.info('MongoDB connection closed due to SIGINT');
-    process.exit(0);
-  });
+  try {
+    mongoose.set('strictQuery', true);
+    
+    await mongoose.connect(mongoUri, {
+      serverSelectionTimeoutMS: 5000,
+    });
+    
+    console.log('✅ MongoDB conectado com sucesso!');
+    
+    mongoose.connection.on('error', (err) => {
+      console.error('❌ Erro no MongoDB:', err);
+    });
+    
+    mongoose.connection.on('disconnected', () => {
+      console.warn('⚠️  MongoDB desconectado');
+    });
+    
+  } catch (err) {
+    console.error('❌ Erro ao conectar no MongoDB:', err);
+    throw err;
+  }
 }
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  try {
+    await mongoose.connection.close();
+    console.log('MongoDB desconectado através do término da aplicação');
+    process.exit(0);
+  } catch (err) {
+    console.error('Erro ao fechar conexão:', err);
+    process.exit(1);
+  }
+});
