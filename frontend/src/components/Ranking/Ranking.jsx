@@ -22,11 +22,26 @@ const Ranking = ({ limit }) => {
       
       const data = await response.json();
       
-      // Ordenar por média de avaliação
       const sorted = data.sort((a, b) => {
-        const avgA = a.stats?.avgRating || 0;
-        const avgB = b.stats?.avgRating || 0;
-        return avgB - avgA;
+        const winsA = a.stats?.wins || 0;
+        const winsB = b.stats?.wins || 0;
+        
+        if (winsB !== winsA) return winsB - winsA;
+        
+        const pointsA = a.stats?.points || 0;
+        const pointsB = b.stats?.points || 0;
+        
+        if (pointsB !== pointsA) return pointsB - pointsA;
+        
+        const assistsA = a.stats?.assists || 0;
+        const assistsB = b.stats?.assists || 0;
+        
+        if (assistsB !== assistsA) return assistsB - assistsA;
+        
+        const blocksA = a.stats?.blocks || 0;
+        const blocksB = b.stats?.blocks || 0;
+        
+        return blocksB - blocksA;
       });
 
       setPlayers(limit ? sorted.slice(0, limit) : sorted);
