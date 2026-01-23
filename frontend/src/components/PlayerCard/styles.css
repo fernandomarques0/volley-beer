@@ -1,48 +1,98 @@
-.player-card-simple {
+.player-card {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid var(--border-color);
+  gap: 12px;
+}
+
+.player-card.compact {
+  gap: 8px;
+}
+
+.player-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.player-card.compact .player-avatar {
+  width: 36px;
+  height: 36px;
+  font-size: 1.125rem;
+}
+
+@media (max-width: 640px) {
+  .player-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  
+  .player-card.compact .player-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 0.875rem;
+  }
+}
+
+.player-avatar.male {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.player-avatar.female {
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
 }
 
 .player-info {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
 }
 
 .player-name {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0;
+  font-weight: 600;
   color: var(--text-primary);
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.player-nickname {
+.player-card.compact .player-name {
   font-size: 0.875rem;
-  color: var(--text-secondary);
-  font-style: italic;
-  margin: 0.25rem 0 0 0;
+}
+
+@media (max-width: 640px) {
+  .player-name {
+    font-size: 0.875rem;
+  }
+  
+  .player-card.compact .player-name {
+    font-size: 0.75rem;
+  }
 }
 
 .player-stats {
   display: flex;
-  gap: 1.5rem;
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
+  gap: 8px;
   align-items: center;
 }
 
-.stat-label {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.25rem;
+.player-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: var(--accent-color);
+  font-weight: 600;
 }
 
-.stat-value {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--primary-color);
+.player-games {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
 }

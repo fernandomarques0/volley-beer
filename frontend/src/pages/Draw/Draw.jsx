@@ -182,9 +182,6 @@ const Draw = () => {
                     <PlayerAvatar player={player} size="medium" />
                     <div className="player-select-info">
                       <div className="player-select-name">{player.name}</div>
-                      <div className="player-select-rating">
-                        ⭐ {player.stats?.avgRating?.toFixed(1) || '0.0'}
-                      </div>
                     </div>
                   </div>
                 ))}
@@ -219,9 +216,6 @@ const Draw = () => {
                         <PlayerAvatar player={player} size="medium" />
                         <div className="team-player-info">
                           <div className="team-player-name">{player.name}</div>
-                          <div className="team-player-rating">
-                            ⭐ {player.stats?.avgRating?.toFixed(1) || '0.0'}
-                          </div>
                         </div>
                       </div>
                     ))}

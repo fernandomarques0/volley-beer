@@ -11,9 +11,8 @@ const Header = () => {
             <span className="logo-text">Volley Beer</span>
           </Link>
           <nav className="nav">
-            <Link to="/" className="nav-link">Home</Link>
             <Link to="/vote" className="nav-link">Votar</Link>
-            <Link to="/rankings" className="nav-link">Rankings</Link>
+            <Link to="/rankings" className="nav-link">Ranking</Link>
             <Link to="/draw" className="nav-link">Sorteio</Link>
           </nav>
         </div>

@@ -23,7 +23,6 @@ const Vote = () => {
     e.preventDefault();
     if (!email) return;
 
-    // Verificar se o email já votou
     try {
       const response = await fetch(`${API_URL}/ratings/check/${encodeURIComponent(email)}`);
       const data = await response.json();
@@ -61,21 +60,17 @@ const Vote = () => {
 
     setIsSubmitting(true);
     try {
-      // Preparar array de avaliações
       const ratingsArray = Object.entries(ratings)
         .filter(([_, value]) => value > 0)
         .map(([playerId, value]) => ({ playerId, value }));
             
-      // Enviar todas as avaliações em uma única requisição
       await submitBatchRatings(ratingsArray, email);
       
       setMessage({ type: 'success', text: 'Avaliações enviadas com sucesso! Redirecionando...' });
       
-      setTimeout(() => {
-        navigate('/');
-      }, 2000);
+      navigate('/');
     } catch (error) {
-      console.error('Erro ao enviar:', error); // Debug
+      console.error('Erro ao enviar:', error);
       setMessage({ type: 'error', text: 'Erro ao enviar avaliações. Tente novamente.' });
     } finally {
       setIsSubmitting(false);
@@ -84,6 +79,16 @@ const Vote = () => {
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (isSubmitting) {
+    return (
+      <div className="vote-page">
+        <div className="container">
+          <Loading message="Enviando suas avaliações..." />
+        </div>
+      </div>
+    );
   }
 
   if (!emailSubmitted) {
@@ -146,7 +151,7 @@ const Vote = () => {
             className="btn btn-primary btn-large"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Enviando avaliações...' : '✅ Enviar todas as avaliações'}
+            ✅ Enviar todas as avaliações
           </button>
         </div>
       </div>

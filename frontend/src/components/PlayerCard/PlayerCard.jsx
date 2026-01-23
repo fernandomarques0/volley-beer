@@ -1,29 +1,24 @@
-import React from 'react';
-import PlayerAvatar from '../PlayerAvatar/PlayerAvatar';
 import './styles.css';
 
-const PlayerCard = ({ player, showStats = false }) => {
+const PlayerCard = ({ player, showStats = true, compact = false }) => {
+  const isMale = player.gender === 'M';
+  const avatar = isMale ? '👨' : '👩';
+
   return (
-    <div className="player-card-simple">
-      <PlayerAvatar player={player} size="medium" />
-      <div className="player-info">
-        <h3 className="player-name">{player.name}</h3>
-        {player.nickname && <p className="player-nickname">"{player.nickname}"</p>}
+    <div className={`player-card ${compact ? 'compact' : ''}`}>
+      <div className={`player-avatar ${isMale ? 'male' : 'female'}`}>
+        {avatar}
       </div>
-      {showStats && (
-        <div className="player-stats">
-          <div className="stat">
-            <span className="stat-label">Média</span>
-            <span className="stat-value">
-              {player.stats?.avgRating?.toFixed(1) || '0.0'}⭐
-            </span>
+      <div className="player-info">
+        <div className="player-name">{player.name}</div>
+        {showStats && (
+          <div className="player-stats">
+            <div className="player-games">
+              {player.stats?.gamesPlayed || 0} jogos
+            </div>
           </div>
-          <div className="stat">
-            <span className="stat-label">Votos</span>
-            <span className="stat-value">{player.stats?.ratingsCount || 0}</span>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

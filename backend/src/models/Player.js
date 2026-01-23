@@ -7,6 +7,12 @@ const playerSchema = new mongoose.Schema({
   stats: {
     avgRating: { type: Number, default: 0 },
     ratingsCount: { type: Number, default: 0 },
+    wins: { type: Number, default: 0 },
+    losses: { type: Number, default: 0 },
+    points: { type: Number, default: 0 },
+    assists: { type: Number, default: 0 },
+    blocks: { type: Number, default: 0 },
+    gamesPlayed: { type: Number, default: 0 },
   },
 }, { 
   timestamps: true,
@@ -14,7 +20,6 @@ const playerSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-// Virtual para retornar _id como 'id'
 playerSchema.virtual('id').get(function() {
   return this._id.toString();
 });

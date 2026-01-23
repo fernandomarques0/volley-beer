@@ -5,6 +5,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { connectDB } from './connection.js';
 import ratings from './routes/ratings.js';
 import players from './routes/players.js';
+import games from './routes/games.js';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/health', (_req, res) => res.json({ status: 'ok' }));
 
 app.use('/api/players', players);
 app.use('/api/ratings', ratings);
+app.use('/api/games', games);
 
 app.use(errorHandler);
 
