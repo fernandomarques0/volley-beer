@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Player from '../models/Player.js';
+import mongoose from 'mongoose';
 
 const router = Router();
 
@@ -14,7 +15,11 @@ router.get('/', async (_req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const player = await Player.findOne({ id: req.params.id });
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'ID inválido' });
+    }
+    
+    const player = await Player.findById(req.params.id);
     if (!player) {
       return res.status(404).json({ message: 'Jogador não encontrado' });
     }
