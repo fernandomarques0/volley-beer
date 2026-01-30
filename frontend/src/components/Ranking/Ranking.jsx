@@ -46,7 +46,6 @@ const Ranking = ({ limit }) => {
 
       setPlayers(limit ? sorted.slice(0, limit) : sorted);
     } catch (err) {
-      console.error('Erro ao buscar jogadores:', err);
       setError('Erro ao carregar ranking');
     } finally {
       setLoading(false);

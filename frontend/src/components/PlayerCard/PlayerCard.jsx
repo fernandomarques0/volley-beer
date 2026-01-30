@@ -6,9 +6,6 @@ const PlayerCard = ({ player, showStats = true, compact = false }) => {
 
   return (
     <div className={`player-card ${compact ? 'compact' : ''}`}>
-      <div className={`player-avatar ${isMale ? 'male' : 'female'}`}>
-        {avatar}
-      </div>
       <div className="player-info">
         <div className="player-name">{player.name}</div>
         {showStats && (

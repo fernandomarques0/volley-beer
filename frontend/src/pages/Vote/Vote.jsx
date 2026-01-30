@@ -38,7 +38,6 @@ const Vote = () => {
       setEmailSubmitted(true);
       setMessage(null);
     } catch (err) {
-      console.error('Erro ao verificar email:', err);
       setEmailSubmitted(true);
     }
   };
@@ -70,7 +69,6 @@ const Vote = () => {
       
       navigate('/');
     } catch (error) {
-      console.error('Erro ao enviar:', error);
       setMessage({ type: 'error', text: 'Erro ao enviar avaliações. Tente novamente.' });
     } finally {
       setIsSubmitting(false);

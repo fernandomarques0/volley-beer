@@ -6,6 +6,7 @@ import Ranking from './pages/Ranking/Ranking';
 import Draw from './pages/Draw/Draw';
 import PlayerDetails from './pages/PlayerDetails';
 import NewGame from './pages/Game/Game';
+import AddPlayer from './pages/AddPlayer/AddPlayer';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/draw" element={<Draw />} />
         <Route path="/player/:id" element={<PlayerDetails />} />
         <Route path="/games/new" element={<NewGame />} />
+        <Route path="/players/new" element={<AddPlayer />} />
       </Routes>
     </Router>
   );

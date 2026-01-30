@@ -64,46 +64,43 @@ const Draw = () => {
       return;
     }
 
-    // Pegar jogadores selecionados
+    // Pegar jogadores selecionados e embaralhar
     let selected = players.filter(p => selectedPlayers.includes(p.id));
-    
-    // Se for um refazer sorteio, embaralhar antes de ordenar
-    if (shuffle) {
-      selected = shuffleArray(selected);
-    }
+    selected = shuffleArray(selected);
     
     // Ordenar por rating (do maior para o menor)
     selected.sort((a, b) => (b.stats?.avgRating || 0) - (a.stats?.avgRating || 0));
 
+    // Inicializar times vazios
     const newTeams = Array.from({ length: numberOfTeams }, () => []);
+    const teamRatings = Array(numberOfTeams).fill(0);
 
-    let currentRound = 0;
-    
-    for (let i = 0; i < selected.length; i++) {
-      const player = selected[i];
-      const roundInCycle = currentRound % numberOfTeams;
-      const isReversing = Math.floor(currentRound / numberOfTeams) % 2 === 1;
-      const teamIndex = isReversing ? (numberOfTeams - 1 - roundInCycle) : roundInCycle;
+    // Distribuir jogadores sempre no time com menor soma de ratings
+    for (const player of selected) {
+      const playerRating = player.stats?.avgRating || 0;
       
-      newTeams[teamIndex].push(player);
-      currentRound++;
+      // Encontrar o time com menor rating total
+      const minRatingIndex = teamRatings.indexOf(Math.min(...teamRatings));
+      
+      // Adicionar jogador ao time com menor rating
+      newTeams[minRatingIndex].push(player);
+      teamRatings[minRatingIndex] += playerRating;
     }
 
-    const allCorrect = newTeams.every(team => team.length === playersPerTeam);
-    
-    if (!allCorrect) {
-      console.error('Erro na distribuição:', newTeams.map(t => t.length));
-      setMessage({
-        type: 'error',
-        text: 'Erro ao distribuir times. Tente novamente.'
-      });
-      return;
-    }
+    // Embaralhar a ordem dos jogadores dentro de cada time
+    newTeams.forEach(team => {
+      for (let i = team.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [team[i], team[j]] = [team[j], team[i]];
+      }
+    });
 
-    setTeams(newTeams);
+    // Embaralhar a ordem dos times
+    const shuffledTeams = shuffleArray(newTeams);
+
+    setTeams(shuffledTeams);
     setMessage({ type: 'success', text: shuffle ? 'Times sorteados novamente!' : 'Times sorteados com sucesso!' });
   };
-
   const redrawTeams = () => {
     setMessage(null);
     distributeTeams(true); // Passa true para embaralhar
@@ -179,7 +176,6 @@ const Draw = () => {
                     <div className="player-checkbox">
                       {selectedPlayers.includes(player.id) && '✓'}
                     </div>
-                    <PlayerAvatar player={player} size="medium" />
                     <div className="player-select-info">
                       <div className="player-select-name">{player.name}</div>
                     </div>
@@ -213,7 +209,6 @@ const Draw = () => {
                   <div className="team-players">
                     {team.map(player => (
                       <div key={player.id} className="team-player">
-                        <PlayerAvatar player={player} size="medium" />
                         <div className="team-player-info">
                           <div className="team-player-name">{player.name}</div>
                         </div>

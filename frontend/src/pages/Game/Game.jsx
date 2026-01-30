@@ -29,10 +29,8 @@ const NewGame = () => {
     try {
       const response = await fetch(`${API_URL}/players`);
       const data = await response.json();
-      console.log('Players loaded:', data);
       setPlayers(data);
     } catch (error) {
-      console.error('Erro ao buscar jogadores:', error);
       setMessage({ type: 'error', text: 'Erro ao carregar jogadores' });
     } finally {
       setLoading(false);
@@ -47,7 +45,7 @@ const NewGame = () => {
       setTeam1Stats(newStats);
     } else {
       setTeam1Players([...team1Players, playerId]);
-      setTeam1Stats({ ...team1Stats, [playerId]: { points: 0, assists: 0, blocks: 0 } });
+      setTeam1Stats({ ...team1Stats, [playerId]: { points: '', assists: '', blocks: '' } });
     }
   };
 
@@ -59,21 +57,20 @@ const NewGame = () => {
       setTeam2Stats(newStats);
     } else {
       setTeam2Players([...team2Players, playerId]);
-      setTeam2Stats({ ...team2Stats, [playerId]: { points: 0, assists: 0, blocks: 0 } });
+      setTeam2Stats({ ...team2Stats, [playerId]: { points: '', assists: '', blocks: '' } });
     }
   };
 
   const updatePlayerStat = (team, playerId, stat, value) => {
-    const val = parseInt(value) || 0;
     if (team === 1) {
       setTeam1Stats({
         ...team1Stats,
-        [playerId]: { ...team1Stats[playerId], [stat]: val }
+        [playerId]: { ...team1Stats[playerId], [stat]: value }
       });
     } else {
       setTeam2Stats({
         ...team2Stats,
-        [playerId]: { ...team2Stats[playerId], [stat]: val }
+        [playerId]: { ...team2Stats[playerId], [stat]: value }
       });
     }
   };
@@ -100,9 +97,9 @@ const NewGame = () => {
           score: parseInt(team1Score),
           stats: team1Players.map(id => ({
             playerId: id,
-            points: team1Stats[id]?.points || 0,
-            assists: team1Stats[id]?.assists || 0,
-            blocks: team1Stats[id]?.blocks || 0,
+            points: parseInt(team1Stats[id]?.points) || 0,
+            assists: parseInt(team1Stats[id]?.assists) || 0,
+            blocks: parseInt(team1Stats[id]?.blocks) || 0,
           })),
         },
         team2: {
@@ -110,9 +107,9 @@ const NewGame = () => {
           score: parseInt(team2Score),
           stats: team2Players.map(id => ({
             playerId: id,
-            points: team2Stats[id]?.points || 0,
-            assists: team2Stats[id]?.assists || 0,
-            blocks: team2Stats[id]?.blocks || 0,
+            points: parseInt(team2Stats[id]?.points) || 0,
+            assists: parseInt(team2Stats[id]?.assists) || 0,
+            blocks: parseInt(team2Stats[id]?.blocks) || 0,
           })),
         },
         notes,
@@ -131,7 +128,6 @@ const NewGame = () => {
       setMessage({ type: 'success', text: 'Jogo cadastrado com sucesso!' });
       setTimeout(() => navigate('/'), 2000);
     } catch (error) {
-      console.error('Erro:', error);
       setMessage({ type: 'error', text: 'Erro ao cadastrar jogo. Tente novamente.' });
     } finally {
       setIsSubmitting(false);
@@ -205,7 +201,8 @@ const NewGame = () => {
                               <input
                                 type="number"
                                 min="0"
-                                value={team1Stats[playerId]?.points || 0}
+                                placeholder="0"
+                                value={team1Stats[playerId]?.points ?? ''}
                                 onChange={(e) => updatePlayerStat(1, playerId, 'points', e.target.value)}
                               />
                             </div>
@@ -214,7 +211,8 @@ const NewGame = () => {
                               <input
                                 type="number"
                                 min="0"
-                                value={team1Stats[playerId]?.assists || 0}
+                                placeholder="0"
+                                value={team1Stats[playerId]?.assists ?? ''}
                                 onChange={(e) => updatePlayerStat(1, playerId, 'assists', e.target.value)}
                               />
                             </div>
@@ -223,7 +221,8 @@ const NewGame = () => {
                               <input
                                 type="number"
                                 min="0"
-                                value={team1Stats[playerId]?.blocks || 0}
+                                placeholder="0"
+                                value={team1Stats[playerId]?.blocks ?? ''}
                                 onChange={(e) => updatePlayerStat(1, playerId, 'blocks', e.target.value)}
                               />
                             </div>
@@ -291,7 +290,8 @@ const NewGame = () => {
                               <input
                                 type="number"
                                 min="0"
-                                value={team2Stats[playerId]?.points || 0}
+                                placeholder="0"
+                                value={team2Stats[playerId]?.points ?? ''}
                                 onChange={(e) => updatePlayerStat(2, playerId, 'points', e.target.value)}
                               />
                             </div>
@@ -300,7 +300,8 @@ const NewGame = () => {
                               <input
                                 type="number"
                                 min="0"
-                                value={team2Stats[playerId]?.assists || 0}
+                                placeholder="0"
+                                value={team2Stats[playerId]?.assists ?? ''}
                                 onChange={(e) => updatePlayerStat(2, playerId, 'assists', e.target.value)}
                               />
                             </div>
@@ -309,7 +310,8 @@ const NewGame = () => {
                               <input
                                 type="number"
                                 min="0"
-                                value={team2Stats[playerId]?.blocks || 0}
+                                placeholder="0"
+                                value={team2Stats[playerId]?.blocks ?? ''}
                                 onChange={(e) => updatePlayerStat(2, playerId, 'blocks', e.target.value)}
                               />
                             </div>

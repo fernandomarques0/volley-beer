@@ -12,7 +12,10 @@ const Home = () => {
               ⭐ Votar agora
             </Link>
             <Link to="/games/new" className="btn btn-secondary">
-              ⚽ Cadastrar jogo
+              ➕ Cadastrar jogo
+            </Link>
+            <Link to="/players/new" className="btn btn-secondary">
+              👤 Adicionar jogador
             </Link>
             <Link to="/draw" className="btn btn-secondary">
               🎲 Sorteio

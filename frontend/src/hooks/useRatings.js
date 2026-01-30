@@ -15,7 +15,6 @@ const useRatings = () => {
       return data;
     } catch (err) {
       setError(err.message);
-      console.error('Error fetching players:', err);
     } finally {
       setLoading(false);
     }
@@ -27,7 +26,6 @@ const useRatings = () => {
       await fetchPlayers(); // Recarrega os jogadores após votar
     } catch (err) {
       setError(err.message);
-      console.error('Error rating player:', err);
     }
   };
 
