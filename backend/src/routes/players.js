@@ -31,7 +31,29 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const player = new Player(req.body);
+    const { name, nickname, gender, initialRating } = req.body;
+    
+    if (!name || !gender) {
+      return res.status(400).json({ message: 'Nome e gênero são obrigatórios' });
+    }
+
+    const playerData = {
+      name,
+      nickname,
+      gender,
+      stats: {
+        avgRating: initialRating || 0,
+        ratingsCount: initialRating ? 1 : 0,
+        wins: 0,
+        losses: 0,
+        points: 0,
+        assists: 0,
+        blocks: 0,
+        gamesPlayed: 0,
+      }
+    };
+
+    const player = new Player(playerData);
     await player.save();
     res.status(201).json(player);
   } catch (e) {
