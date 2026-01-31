@@ -75,6 +75,24 @@ const NewGame = () => {
     }
   };
 
+  const incrementStat = (team, playerId, stat) => {
+    const currentValue = team === 1 
+      ? parseInt(team1Stats[playerId]?.[stat]) || 0
+      : parseInt(team2Stats[playerId]?.[stat]) || 0;
+    
+    updatePlayerStat(team, playerId, stat, (currentValue + 1).toString());
+  };
+
+  const decrementStat = (team, playerId, stat) => {
+    const currentValue = team === 1 
+      ? parseInt(team1Stats[playerId]?.[stat]) || 0
+      : parseInt(team2Stats[playerId]?.[stat]) || 0;
+    
+    if (currentValue > 0) {
+      updatePlayerStat(team, playerId, stat, (currentValue - 1).toString());
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -198,33 +216,87 @@ const NewGame = () => {
                           <div className="stat-inputs">
                             <div className="stat-input">
                               <label>Pontos</label>
-                              <input
-                                type="number"
-                                min="0"
-                                placeholder="0"
-                                value={team1Stats[playerId]?.points ?? ''}
-                                onChange={(e) => updatePlayerStat(1, playerId, 'points', e.target.value)}
-                              />
+                              <div className="stat-control">
+                                <input
+                                  type="number"
+                                  min="0"
+                                  placeholder="0"
+                                  value={team1Stats[playerId]?.points ?? ''}
+                                  onChange={(e) => updatePlayerStat(1, playerId, 'points', e.target.value)}
+                                />
+                                <div className="stat-buttons">
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-minus"
+                                    onClick={() => decrementStat(1, playerId, 'points')}
+                                  >
+                                    −
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-plus"
+                                    onClick={() => incrementStat(1, playerId, 'points')}
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                             <div className="stat-input">
                               <label>Assistências</label>
-                              <input
-                                type="number"
-                                min="0"
-                                placeholder="0"
-                                value={team1Stats[playerId]?.assists ?? ''}
-                                onChange={(e) => updatePlayerStat(1, playerId, 'assists', e.target.value)}
-                              />
+                              <div className="stat-control">
+                                <input
+                                  type="number"
+                                  min="0"
+                                  placeholder="0"
+                                  value={team1Stats[playerId]?.assists ?? ''}
+                                  onChange={(e) => updatePlayerStat(1, playerId, 'assists', e.target.value)}
+                                />
+                                <div className="stat-buttons">
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-minus"
+                                    onClick={() => decrementStat(1, playerId, 'assists')}
+                                  >
+                                    −
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-plus"
+                                    onClick={() => incrementStat(1, playerId, 'assists')}
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                             <div className="stat-input">
                               <label>Bloqueios</label>
-                              <input
-                                type="number"
-                                min="0"
-                                placeholder="0"
-                                value={team1Stats[playerId]?.blocks ?? ''}
-                                onChange={(e) => updatePlayerStat(1, playerId, 'blocks', e.target.value)}
-                              />
+                              <div className="stat-control">
+                                <input
+                                  type="number"
+                                  min="0"
+                                  placeholder="0"
+                                  value={team1Stats[playerId]?.blocks ?? ''}
+                                  onChange={(e) => updatePlayerStat(1, playerId, 'blocks', e.target.value)}
+                                />
+                                <div className="stat-buttons">
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-minus"
+                                    onClick={() => decrementStat(1, playerId, 'blocks')}
+                                  >
+                                    −
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-plus"
+                                    onClick={() => incrementStat(1, playerId, 'blocks')}
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -287,33 +359,87 @@ const NewGame = () => {
                           <div className="stat-inputs">
                             <div className="stat-input">
                               <label>Pontos</label>
-                              <input
-                                type="number"
-                                min="0"
-                                placeholder="0"
-                                value={team2Stats[playerId]?.points ?? ''}
-                                onChange={(e) => updatePlayerStat(2, playerId, 'points', e.target.value)}
-                              />
+                              <div className="stat-control">
+                                <input
+                                  type="number"
+                                  min="0"
+                                  placeholder="0"
+                                  value={team2Stats[playerId]?.points ?? ''}
+                                  onChange={(e) => updatePlayerStat(2, playerId, 'points', e.target.value)}
+                                />
+                                <div className="stat-buttons">
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-minus"
+                                    onClick={() => decrementStat(2, playerId, 'points')}
+                                  >
+                                    −
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-plus"
+                                    onClick={() => incrementStat(2, playerId, 'points')}
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                             <div className="stat-input">
                               <label>Assistências</label>
-                              <input
-                                type="number"
-                                min="0"
-                                placeholder="0"
-                                value={team2Stats[playerId]?.assists ?? ''}
-                                onChange={(e) => updatePlayerStat(2, playerId, 'assists', e.target.value)}
-                              />
+                              <div className="stat-control">
+                                <input
+                                  type="number"
+                                  min="0"
+                                  placeholder="0"
+                                  value={team2Stats[playerId]?.assists ?? ''}
+                                  onChange={(e) => updatePlayerStat(2, playerId, 'assists', e.target.value)}
+                                />
+                                <div className="stat-buttons">
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-minus"
+                                    onClick={() => decrementStat(2, playerId, 'assists')}
+                                  >
+                                    −
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-plus"
+                                    onClick={() => incrementStat(2, playerId, 'assists')}
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                             <div className="stat-input">
                               <label>Bloqueios</label>
-                              <input
-                                type="number"
-                                min="0"
-                                placeholder="0"
-                                value={team2Stats[playerId]?.blocks ?? ''}
-                                onChange={(e) => updatePlayerStat(2, playerId, 'blocks', e.target.value)}
-                              />
+                              <div className="stat-control">
+                                <input
+                                  type="number"
+                                  min="0"
+                                  placeholder="0"
+                                  value={team2Stats[playerId]?.blocks ?? ''}
+                                  onChange={(e) => updatePlayerStat(2, playerId, 'blocks', e.target.value)}
+                                />
+                                <div className="stat-buttons">
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-minus"
+                                    onClick={() => decrementStat(2, playerId, 'blocks')}
+                                  >
+                                    −
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="stat-btn stat-btn-plus"
+                                    onClick={() => incrementStat(2, playerId, 'blocks')}
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>

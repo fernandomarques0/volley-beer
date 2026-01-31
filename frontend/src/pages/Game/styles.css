@@ -39,7 +39,6 @@
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
 }
 
 .team-section h2 {
@@ -102,6 +101,7 @@
   width: 18px;
   height: 18px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .player-checkbox input[type="checkbox"]:disabled {
@@ -120,15 +120,9 @@
 }
 
 .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-}
-
-@media (max-width: 640px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .stat-row {
@@ -145,39 +139,135 @@
 }
 
 .stat-inputs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .stat-input {
   display: flex;
   flex-direction: column;
+  gap: 6px;
 }
 
 .stat-input label {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 0;
   color: var(--text-secondary);
 }
 
-.stat-input input {
-  width: 100%;
-  padding: 8px;
+.stat-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat-buttons {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.stat-btn {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--primary-color);
+  background-color: white;
+  color: var(--primary-color);
+  border-radius: 6px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.stat-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.stat-btn:active {
+  transform: scale(0.95);
+}
+
+.stat-btn-minus {
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+.stat-btn-minus:hover {
+  background-color: #ef4444;
+  color: white;
+}
+
+.stat-btn-plus {
+  color: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.stat-btn-plus:hover {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.stat-input input[type="number"] {
+  width: 80px;
+  max-width: 80px;
+  padding: 10px 8px;
   border: 2px solid var(--border-color);
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
   color: var(--text-primary);
   background-color: white;
   transition: border-color 0.2s;
+  flex-shrink: 0;
+}
+
+.stat-input input[type="number"]::-webkit-inner-spin-button,
+.stat-input input[type="number"]::-webkit-outer-spin-button {
+  display: none;
+}
+
+.stat-input input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 .stat-input input:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+@media (max-width: 640px) {
+  .stat-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
+  
+  .stat-buttons {
+    gap: 3px;
+  }
+  
+  .stat-control {
+    gap: 6px;
+  }
+  
+  .stat-input input[type="number"] {
+    width: 60px;
+    max-width: 60px;
+    padding: 8px 6px;
+    font-size: 16px;
+  }
 }
 
 .form-actions {
