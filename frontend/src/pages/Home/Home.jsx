@@ -11,7 +11,7 @@ const Home = () => {
             <Link to="/vote" className="btn btn-secondary">
               ⭐ Votar agora
             </Link>
-            <Link to="/games/new" className="btn btn-secondary">
+            <Link to="/game/setup" className="btn btn-secondary">
               ➕ Cadastrar jogo
             </Link>
             <Link to="/players/new" className="btn btn-secondary">

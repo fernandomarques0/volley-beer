@@ -5,8 +5,9 @@ import Vote from './pages/Vote/Vote';
 import Ranking from './pages/Ranking/Ranking';
 import Draw from './pages/Draw/Draw';
 import PlayerDetails from './pages/PlayerDetails';
-import NewGame from './pages/Game/Game';
 import AddPlayer from './pages/AddPlayer/AddPlayer';
+import GameRegister from './pages/GameRegister/GameRegister';
+import GameSetup from './pages/GameSetup/GameSetup';
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
         <Route path="/rankings" element={<Ranking />} />
         <Route path="/draw" element={<Draw />} />
         <Route path="/player/:id" element={<PlayerDetails />} />
-        <Route path="/games/new" element={<NewGame />} />
+        <Route path="/game/setup" element={<GameSetup />} />
+        <Route path="/game/register" element={<GameRegister />} />
         <Route path="/players/new" element={<AddPlayer />} />
       </Routes>
     </Router>

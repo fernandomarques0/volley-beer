@@ -1,0 +1,296 @@
+.game-setup-page {
+  min-height: 100vh;
+  padding: 10px 0 100px 0;
+  background: var(--bg-color);
+}
+
+.page-header-compact {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.page-header-compact h1 {
+  font-size: 1.75rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-primary);
+}
+
+.header-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Tabs de Times */
+.team-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  background: white;
+  padding: 0.875rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.team-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.875rem 0.75rem;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.team-tab:active {
+  transform: scale(0.97);
+}
+
+.team-tab.active {
+  border-color: var(--primary-color);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.team-tab:first-child.active {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.team-tab:last-child.active {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.tab-emoji {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.tab-label {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+}
+
+.tab-count {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  background: var(--primary-color);
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.team-tab:first-child.active .tab-count {
+  background: #3b82f6;
+}
+
+.team-tab:last-child.active .tab-count {
+  background: #ef4444;
+}
+
+/* Lista de Jogadores - Cards menores */
+.players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.player-item {
+  background: white;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 2px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.player-item:active:not(.disabled) {
+  transform: scale(0.98);
+}
+
+.player-item.selected {
+  border-color: var(--primary-color);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.player-item.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.player-checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+  background: white;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.player-item.selected .player-checkbox {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.player-name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.other-team-badge {
+  font-size: 1.125rem;
+  opacity: 0.5;
+}
+
+/* Botão fixo */
+.form-actions-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 0.875rem;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.form-actions-fixed .btn-large {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: block;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+}
+
+.form-actions-fixed .btn-large:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsivo */
+@media (min-width: 768px) {
+  .game-setup-page {
+    padding: 80px 0 100px 0;
+  }
+
+  .page-header-compact h1 {
+    font-size: 2rem;
+  }
+
+  .header-subtitle {
+    font-size: 1rem;
+  }
+
+  .team-tabs {
+    max-width: 600px;
+    margin: 0 auto 1rem auto;
+    gap: 0.875rem;
+    padding: 1rem;
+  }
+
+  .team-tab {
+    padding: 1rem 0.875rem;
+  }
+
+  .players-list {
+    max-width: 600px;
+    margin: 0 auto 1rem auto;
+    gap: 0.625rem;
+  }
+
+  .player-item {
+    padding: 0.875rem 1.125rem;
+  }
+
+  .player-name {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header-compact {
+    padding: 1rem;
+  }
+
+  .page-header-compact h1 {
+    font-size: 1.5rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.8125rem;
+  }
+
+  .team-tabs {
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .team-tab {
+    padding: 0.75rem 0.625rem;
+  }
+
+  .tab-emoji {
+    font-size: 1.375rem;
+  }
+
+  .tab-label {
+    font-size: 0.875rem;
+  }
+
+  .tab-count {
+    width: 22px;
+    height: 22px;
+    font-size: 0.6875rem;
+  }
+
+  .player-item {
+    padding: 0.625rem 0.875rem;
+  }
+
+  .player-checkbox {
+    width: 22px;
+    height: 22px;
+    font-size: 0.9375rem;
+  }
+
+  .player-name {
+    font-size: 0.875rem;
+  }
+
+  .other-team-badge {
+    font-size: 1rem;
+  }
+}

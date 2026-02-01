@@ -30,12 +30,29 @@ const Draw = () => {
     }
   };
 
+  const handlePlayersPerTeamChange = (value) => {
+    const num = parseInt(value) || 0;
+    if (num >= 1 && num <= 10) {
+      setPlayersPerTeam(num);
+    } else if (value === '') {
+      setPlayersPerTeam('');
+    }
+  };
+
+  const handleNumberOfTeamsChange = (value) => {
+    const num = parseInt(value) || 0;
+    if (num >= 2 && num <= 6) {
+      setNumberOfTeams(num);
+    } else if (value === '') {
+      setNumberOfTeams('');
+    }
+  };
+
   const calculateTeamAverage = (teamPlayers) => {
     const sum = teamPlayers.reduce((acc, player) => acc + (player.stats?.avgRating || 0), 0);
     return (sum / teamPlayers.length).toFixed(2);
   };
 
-  // Função para embaralhar array (Fisher-Yates shuffle)
   const shuffleArray = (array) => {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -46,12 +63,23 @@ const Draw = () => {
   };
 
   const distributeTeams = (shuffle = false) => {
-    const totalPlayers = playersPerTeam * numberOfTeams;
+    const ppt = parseInt(playersPerTeam) || 0;
+    const not = parseInt(numberOfTeams) || 0;
+    
+    if (ppt < 1 || not < 2) {
+      setMessage({
+        type: 'error',
+        text: 'Configure corretamente o número de jogadores por time (mínimo 1) e número de times (mínimo 2)'
+      });
+      return;
+    }
+
+    const totalPlayers = ppt * not;
     
     if (selectedPlayers.length < totalPlayers) {
       setMessage({
         type: 'error',
-        text: `Você precisa selecionar pelo menos ${totalPlayers} jogadores (${playersPerTeam} por time × ${numberOfTeams} times)`
+        text: `Você precisa selecionar pelo menos ${totalPlayers} jogadores (${ppt} por time × ${not} times)`
       });
       return;
     }
@@ -59,35 +87,48 @@ const Draw = () => {
     if (selectedPlayers.length > totalPlayers) {
       setMessage({
         type: 'error',
-        text: `Você selecionou ${selectedPlayers.length} jogadores, mas precisa de exatamente ${totalPlayers} (${playersPerTeam} por time × ${numberOfTeams} times)`
+        text: `Você selecionou ${selectedPlayers.length} jogadores, mas precisa de exatamente ${totalPlayers} (${ppt} por time × ${not} times)`
       });
       return;
     }
 
-    // Pegar jogadores selecionados e embaralhar
+    // Pegar jogadores selecionados
     let selected = players.filter(p => selectedPlayers.includes(p.id));
+    
+    // Embaralhar completamente os jogadores primeiro
     selected = shuffleArray(selected);
     
     // Ordenar por rating (do maior para o menor)
     selected.sort((a, b) => (b.stats?.avgRating || 0) - (a.stats?.avgRating || 0));
 
-    // Inicializar times vazios
-    const newTeams = Array.from({ length: numberOfTeams }, () => []);
-    const teamRatings = Array(numberOfTeams).fill(0);
-
-    // Distribuir jogadores sempre no time com menor soma de ratings
-    for (const player of selected) {
-      const playerRating = player.stats?.avgRating || 0;
-      
-      // Encontrar o time com menor rating total
-      const minRatingIndex = teamRatings.indexOf(Math.min(...teamRatings));
-      
-      // Adicionar jogador ao time com menor rating
-      newTeams[minRatingIndex].push(player);
-      teamRatings[minRatingIndex] += playerRating;
+    // Dividir jogadores em grupos (rounds) baseado no número de jogadores por time
+    // Cada grupo terá 'numberOfTeams' jogadores
+    const rounds = [];
+    for (let i = 0; i < ppt; i++) {
+      const roundPlayers = selected.slice(i * not, (i + 1) * not);
+      // Embaralhar jogadores dentro de cada round para adicionar aleatoriedade
+      rounds.push(shuffleArray(roundPlayers));
     }
 
-    // Embaralhar a ordem dos jogadores dentro de cada time
+    // Criar times vazios
+    const newTeams = Array.from({ length: not }, () => []);
+
+    // Distribuir usando snake draft por round
+    rounds.forEach((roundPlayers, roundIndex) => {
+      const isReverseRound = roundIndex % 2 === 1;
+      
+      roundPlayers.forEach((player, playerIndex) => {
+        const teamIndex = isReverseRound 
+          ? (not - 1 - playerIndex) 
+          : playerIndex;
+        
+        if (newTeams[teamIndex]) {
+          newTeams[teamIndex].push(player);
+        }
+      });
+    });
+
+    // Embaralhar ordem dos jogadores dentro de cada time
     newTeams.forEach(team => {
       for (let i = team.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -95,15 +136,16 @@ const Draw = () => {
       }
     });
 
-    // Embaralhar a ordem dos times
+    // Embaralhar ordem dos times
     const shuffledTeams = shuffleArray(newTeams);
 
     setTeams(shuffledTeams);
     setMessage({ type: 'success', text: shuffle ? 'Times sorteados novamente!' : 'Times sorteados com sucesso!' });
   };
+
   const redrawTeams = () => {
     setMessage(null);
-    distributeTeams(true); // Passa true para embaralhar
+    distributeTeams(true);
   };
 
   const resetDraw = () => {
@@ -115,6 +157,8 @@ const Draw = () => {
   if (loading) {
     return <Loading />;
   }
+
+  const totalPlayersNeeded = (parseInt(playersPerTeam) || 0) * (parseInt(numberOfTeams) || 0);
 
   return (
     <div className="draw-page">
@@ -137,8 +181,14 @@ const Draw = () => {
                   min="1"
                   max="10"
                   value={playersPerTeam}
-                  onChange={(e) => setPlayersPerTeam(Number(e.target.value))}
+                  onChange={(e) => handlePlayersPerTeamChange(e.target.value)}
+                  onBlur={(e) => {
+                    if (e.target.value === '' || parseInt(e.target.value) < 1) {
+                      setPlayersPerTeam(3);
+                    }
+                  }}
                   className="config-input"
+                  placeholder="3"
                 />
               </div>
               <div className="config-card">
@@ -148,13 +198,19 @@ const Draw = () => {
                   min="2"
                   max="6"
                   value={numberOfTeams}
-                  onChange={(e) => setNumberOfTeams(Number(e.target.value))}
+                  onChange={(e) => handleNumberOfTeamsChange(e.target.value)}
+                  onBlur={(e) => {
+                    if (e.target.value === '' || parseInt(e.target.value) < 2) {
+                      setNumberOfTeams(3);
+                    }
+                  }}
                   className="config-input"
+                  placeholder="3"
                 />
               </div>
               <div className="config-card total-info">
-                <div className="total-label">Total de Jogadores Necessários</div>
-                <div className="total-value">{playersPerTeam * numberOfTeams}</div>
+                <div className="total-label">Total Necessário</div>
+                <div className="total-value">{totalPlayersNeeded}</div>
               </div>
             </div>
 
@@ -188,7 +244,7 @@ const Draw = () => {
               <button
                 className="btn btn-primary btn-large"
                 onClick={() => distributeTeams(false)}
-                disabled={selectedPlayers.length === 0}
+                disabled={selectedPlayers.length === 0 || totalPlayersNeeded === 0}
               >
                 🎲 Sortear Times
               </button>

@@ -1,0 +1,419 @@
+.game-register-page {
+  min-height: 100vh;
+  padding: 10px 0 100px 0;
+  background: var(--bg-color);
+}
+
+.page-header-compact {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  color: var(--primary-dark);
+  transform: translateX(-2px);
+}
+
+.back-button:active {
+  transform: translateX(-4px);
+}
+
+.page-header-compact h1 {
+  font-size: 1.75rem;
+  margin: 0 0 1rem 0;
+  color: var(--text-primary);
+}
+
+.score-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.score-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.score-box label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.score-input-compact {
+  width: 80px;
+  padding: 0.75rem;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.score-input-compact:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.vs-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-top: 1.5rem;
+}
+
+.game-form-compact {
+  max-width: 100%;
+}
+
+/* Tabs de Times */
+.team-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.team-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.team-tab:active {
+  transform: scale(0.97);
+}
+
+.team-tab.active {
+  border-color: var(--primary-color);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.team-tab:first-child.active {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.team-tab:last-child.active {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.tab-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.tab-subtitle {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+/* Estatísticas */
+.stats-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.player-stat-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.player-stat-header {
+  margin-bottom: 0.75rem;
+}
+
+.player-stat-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.stat-controls-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.stat-control-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stat-control-item label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-control-compact {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.stat-btn-compact {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 2px solid;
+  background: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.stat-btn-compact.minus {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.stat-btn-compact.minus:active {
+  background-color: #ef4444;
+  color: white;
+  transform: scale(0.95);
+}
+
+.stat-btn-compact.plus {
+  border-color: var(--success-color);
+  color: var(--success-color);
+}
+
+.stat-btn-compact.plus:active {
+  background-color: var(--success-color);
+  color: white;
+  transform: scale(0.95);
+}
+
+.stat-value {
+  width: 45px;
+  padding: 0.4rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.stat-value::-webkit-inner-spin-button,
+.stat-value::-webkit-outer-spin-button {
+  display: none;
+}
+
+.stat-value {
+  -moz-appearance: textfield;
+}
+
+.stat-value:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* Botão fixo */
+.form-actions-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.form-actions-fixed .btn-large {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: block;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
+
+.form-actions-fixed .btn-large:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsivo */
+@media (min-width: 768px) {
+  .game-register-page {
+    padding: 80px 0 100px 0;
+  }
+
+  .page-header-compact h1 {
+    font-size: 2rem;
+  }
+
+  .score-input-compact {
+    width: 100px;
+    font-size: 2rem;
+  }
+
+  .team-tabs {
+    max-width: 600px;
+    margin: 0 auto 1.5rem auto;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .team-tab {
+    padding: 1.25rem;
+  }
+
+  .stats-section {
+    max-width: 600px;
+    margin: 0 auto 1rem auto;
+  }
+
+  .player-stat-card {
+    padding: 1.25rem;
+  }
+
+  .player-stat-header h4 {
+    font-size: 1.125rem;
+  }
+
+  .stat-controls-row {
+    gap: 1rem;
+  }
+
+  .stat-btn-compact {
+    width: 36px;
+    height: 36px;
+  }
+
+  .stat-value {
+    width: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .back-button {
+    font-size: 0.875rem;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.375rem;
+  }
+
+  .page-header-compact {
+    padding: 1rem;
+  }
+
+  .page-header-compact h1 {
+    font-size: 1.5rem;
+  }
+
+  .score-input-compact {
+    width: 70px;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+  }
+
+  .vs-text {
+    font-size: 1.25rem;
+  }
+
+  .team-tabs {
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .team-tab {
+    padding: 0.875rem;
+  }
+
+  .tab-label {
+    font-size: 0.9375rem;
+  }
+
+  .tab-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .player-stat-card {
+    padding: 0.875rem;
+  }
+
+  .player-stat-header h4 {
+    font-size: 0.9375rem;
+  }
+
+  .stat-control-item label {
+    font-size: 0.6875rem;
+  }
+
+  .stat-controls-row {
+    gap: 0.5rem;
+  }
+
+  .stat-btn-compact {
+    width: 28px;
+    height: 28px;
+    font-size: 1.125rem;
+  }
+
+  .stat-value {
+    width: 40px;
+    font-size: 0.9375rem;
+  }
+}

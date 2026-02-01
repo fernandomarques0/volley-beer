@@ -10,7 +10,7 @@ const Rankings = () => {
           <p>Classificação completa dos jogadores</p>
         </div>
         
-        <Ranking />
+        <Ranking fullMode={true} />
       </div>
     </div>
   );
