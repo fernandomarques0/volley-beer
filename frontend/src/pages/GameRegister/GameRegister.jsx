@@ -68,7 +68,7 @@ const GameRegister = () => {
     if (Object.keys(team1Stats).length === 0) {
       const initialStats = {};
       team1Players.forEach(id => {
-        initialStats[id] = { points: '', assists: '', blocks: '' };
+        initialStats[id] = { points: '', assists: '', blocks: '', defense: '' };
       });
       setTeam1Stats(initialStats);
     }
@@ -76,7 +76,7 @@ const GameRegister = () => {
     if (Object.keys(team2Stats).length === 0) {
       const initialStats2 = {};
       team2Players.forEach(id => {
-        initialStats2[id] = { points: '', assists: '', blocks: '' };
+        initialStats2[id] = { points: '', assists: '', blocks: '', defense: '' };
       });
       setTeam2Stats(initialStats2);
     }
@@ -150,6 +150,7 @@ const GameRegister = () => {
             points: parseInt(team1Stats[id]?.points) || 0,
             assists: parseInt(team1Stats[id]?.assists) || 0,
             blocks: parseInt(team1Stats[id]?.blocks) || 0,
+            defense: parseInt(team1Stats[id]?.defense) || 0,
           })),
         },
         team2: {
@@ -160,6 +161,7 @@ const GameRegister = () => {
             points: parseInt(team2Stats[id]?.points) || 0,
             assists: parseInt(team2Stats[id]?.assists) || 0,
             blocks: parseInt(team2Stats[id]?.blocks) || 0,
+            defense: parseInt(team2Stats[id]?.defense) || 0,
           })),
         },
         notes,
@@ -357,6 +359,34 @@ const GameRegister = () => {
                           type="button"
                           className="stat-btn-compact plus"
                           onClick={() => incrementStat(currentTeam, playerId, 'blocks')}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="stat-control-item">
+                      <label>Def.</label>
+                      <div className="stat-control-compact">
+                        <button
+                          type="button"
+                          className="stat-btn-compact minus"
+                          onClick={() => decrementStat(currentTeam, playerId, 'defense')}
+                        >
+                          −
+                        </button>
+                        <input
+                          type="number"
+                          min="0"
+                          placeholder="0"
+                          value={currentTeamStats[playerId]?.defense ?? ''}
+                          onChange={(e) => updatePlayerStat(currentTeam, playerId, 'defense', e.target.value)}
+                          className="stat-value"
+                        />
+                        <button
+                          type="button"
+                          className="stat-btn-compact plus"
+                          onClick={() => incrementStat(currentTeam, playerId, 'defense')}
                         >
                           +
                         </button>

@@ -147,7 +147,7 @@
 
 .ranking-header {
   display: grid;
-  grid-template-columns: 40px 1fr 50px 55px 55px 50px 50px;
+  grid-template-columns: 40px 1fr 50px 55px 50px 50px 50px 50px;
   gap: 8px;
   padding: 14px 12px;
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
@@ -155,30 +155,30 @@
   font-weight: 700;
   font-size: 0.75rem;
   text-align: center;
-  min-width: 520px;
+  min-width: 550px;
 }
 
 .ranking-header.full-mode {
-  grid-template-columns: 40px 1fr 50px 55px 60px 50px 60px 50px 50px;
+  grid-template-columns: 40px 1fr 50px 55px 60px 50px 60px 50px 50px 50px;
   gap: 6px;
-  min-width: 650px;
+  min-width: 700px;
 }
 
 .ranking-row {
   display: grid;
-  grid-template-columns: 40px 1fr 50px 55px 55px 50px 50px;
+  grid-template-columns: 40px 1fr 50px 55px 50px 50px 50px 50px;
   gap: 8px;
   padding: 12px;
   border-bottom: 1px solid var(--border-color);
   align-items: center;
   transition: background-color 0.2s;
-  min-width: 520px;
+  min-width: 550px;
 }
 
 .ranking-row.full-mode {
-  grid-template-columns: 40px 1fr 50px 55px 60px 50px 60px 50px 50px;
+  grid-template-columns: 40px 1fr 50px 55px 60px 50px 60px 50px 50px 50px;
   gap: 6px;
-  min-width: 650px;
+  min-width: 700px;
 }
 
 .ranking-row:hover {
@@ -242,59 +242,59 @@
 
 @media (max-width: 768px) {
   .ranking-header {
-    grid-template-columns: 32px minmax(70px, 100px) 42px 48px 48px 42px 42px;
+    grid-template-columns: 32px minmax(70px, 100px) 42px 48px 42px 42px 42px 42px;
     gap: 6px;
     padding: 10px 8px;
     font-size: 0.65rem;
-    min-width: 420px;
+    min-width: 450px;
   }
 
   .ranking-header.full-mode {
-    grid-template-columns: 32px minmax(70px, 100px) 42px 48px 52px 42px 52px 42px 42px;
+    grid-template-columns: 32px minmax(70px, 100px) 42px 48px 52px 42px 52px 42px 42px 42px;
     gap: 4px;
-    min-width: 520px;
+    min-width: 560px;
   }
 
   .ranking-row {
-    grid-template-columns: 32px minmax(70px, 100px) 42px 48px 48px 42px 42px;
+    grid-template-columns: 32px minmax(70px, 100px) 42px 48px 42px 42px 42px 42px;
     gap: 6px;
     padding: 10px 8px;
-    min-width: 420px;
+    min-width: 450px;
   }
 
   .ranking-row.full-mode {
-    grid-template-columns: 32px minmax(70px, 100px) 42px 48px 52px 42px 52px 42px 42px;
+    grid-template-columns: 32px minmax(70px, 100px) 42px 48px 52px 42px 52px 42px 42px 42px;
     gap: 4px;
-    min-width: 520px;
+    min-width: 560px;
   }
 }
 
 @media (max-width: 640px) {
   .ranking-header {
-    grid-template-columns: 28px minmax(60px, 90px) 38px 44px 44px 38px 38px;
+    grid-template-columns: 28px minmax(60px, 90px) 38px 44px 38px 38px 38px 38px;
     gap: 4px;
     padding: 8px 6px;
     font-size: 0.6rem;
-    min-width: 380px;
+    min-width: 400px;
   }
 
   .ranking-header.full-mode {
-    grid-template-columns: 28px minmax(60px, 90px) 38px 44px 48px 38px 48px 38px 38px;
+    grid-template-columns: 28px minmax(60px, 90px) 38px 44px 48px 38px 48px 38px 38px 38px;
     gap: 3px;
-    min-width: 480px;
+    min-width: 510px;
   }
 
   .ranking-row {
-    grid-template-columns: 28px minmax(60px, 90px) 38px 44px 44px 38px 38px;
+    grid-template-columns: 28px minmax(60px, 90px) 38px 44px 38px 38px 38px 38px;
     gap: 4px;
     padding: 8px 6px;
-    min-width: 380px;
+    min-width: 400px;
   }
 
   .ranking-row.full-mode {
-    grid-template-columns: 28px minmax(60px, 90px) 38px 44px 48px 38px 48px 38px 38px;
+    grid-template-columns: 28px minmax(60px, 90px) 38px 44px 48px 38px 48px 38px 38px 38px;
     gap: 3px;
-    min-width: 480px;
+    min-width: 510px;
   }
 }
 

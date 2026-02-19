@@ -81,6 +81,7 @@ const Ranking = ({ limit, fullMode = false }) => {
           case 'points': return player.stats?.points || 0;
           case 'assists': return player.stats?.assists || 0;
           case 'blocks': return player.stats?.blocks || 0;
+          case 'defense': return player.stats?.defense || 0;
           case 'pointsPerGame': return parseFloat(calculatePointsPerGame(player));
           case 'winRate': return parseFloat(calculateWinRate(player));
           default: return player.stats?.wins || 0;
@@ -92,7 +93,7 @@ const Ranking = ({ limit, fullMode = false }) => {
 
       if (valB !== valA) return valB - valA;
 
-      const tiebreakers = ['wins', 'points', 'assists', 'blocks'];
+      const tiebreakers = ['wins', 'points', 'assists', 'blocks', 'defense'];
       for (const tiebreaker of tiebreakers) {
         const tieA = getValue(a, tiebreaker);
         const tieB = getValue(b, tiebreaker);
@@ -190,6 +191,7 @@ const Ranking = ({ limit, fullMode = false }) => {
               <option value="points">Pontos</option>
               <option value="assists">Assistências</option>
               <option value="blocks">Bloqueios</option>
+              <option value="defense">Defesas</option>
               <option value="pointsPerGame">Pts/Jogo</option>
               <option value="winRate">Aproveitamento</option>
             </select>
@@ -208,6 +210,7 @@ const Ranking = ({ limit, fullMode = false }) => {
           {fullMode && <div className="stat-col">PPG</div>}
           <div className="stat-col">Ass.</div>
           <div className="stat-col">Blq.</div>
+          <div className="stat-col">Def.</div>
         </div>
 
         {players.map((player, index) => (
@@ -244,6 +247,9 @@ const Ranking = ({ limit, fullMode = false }) => {
             </div>
             <div className="stat-col">
               <span className="stat-value">{player.stats?.blocks || 0}</span>
+            </div>
+            <div className="stat-col">
+              <span className="stat-value">{player.stats?.defense || 0}</span>
             </div>
           </div>
         ))}

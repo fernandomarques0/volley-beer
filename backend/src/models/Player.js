@@ -12,6 +12,7 @@ const playerSchema = new mongoose.Schema({
     points: { type: Number, default: 0 },
     assists: { type: Number, default: 0 },
     blocks: { type: Number, default: 0 },
+    defense: { type: Number, default: 0 },
     gamesPlayed: { type: Number, default: 0 },
   },
 }, { 

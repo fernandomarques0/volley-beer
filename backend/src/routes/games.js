@@ -110,6 +110,7 @@ router.post('/', async (req, res, next) => {
         player.stats.points += playerStats.points || 0;
         player.stats.assists += playerStats.assists || 0;
         player.stats.blocks += playerStats.blocks || 0;
+        player.stats.defense += playerStats.defense || 0;
       }
 
       await player.save({ session });

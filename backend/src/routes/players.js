@@ -42,6 +42,7 @@ router.get('/', async (req, res) => {
       let assists = 0;
       let blocks = 0;
       let gamesPlayed = 0;
+      let defense = 0;
       
       games.forEach(game => {
         // Verificar Time 1
@@ -56,6 +57,7 @@ router.get('/', async (req, res) => {
             points += playerStats.points || 0;
             assists += playerStats.assists || 0;
             blocks += playerStats.blocks || 0;
+            defense += playerStats.defense || 0;
           }
         }
         
@@ -71,6 +73,7 @@ router.get('/', async (req, res) => {
             points += playerStats.points || 0;
             assists += playerStats.assists || 0;
             blocks += playerStats.blocks || 0;
+            defense += playerStats.defense || 0;
           }
         }
       });
@@ -83,6 +86,7 @@ router.get('/', async (req, res) => {
           points,
           assists,
           blocks,
+          defense,
           gamesPlayed
         }
       };
@@ -131,6 +135,7 @@ router.post('/', async (req, res, next) => {
         points: 0,
         assists: 0,
         blocks: 0,
+        defense: 0,
         gamesPlayed: 0,
       }
     };
