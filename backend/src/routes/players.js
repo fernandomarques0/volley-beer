@@ -148,4 +148,21 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'ID inválido' });
+    }
+    
+    const player = await Player.findByIdAndDelete(req.params.id);
+    if (!player) {
+      return res.status(404).json({ message: 'Jogador não encontrado' });
+    }
+    
+    res.json({ message: 'Jogador excluído com sucesso', player });
+  } catch (e) {
+    next(e);
+  }
+});
+
 export default router;

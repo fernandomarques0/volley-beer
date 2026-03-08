@@ -4,6 +4,8 @@ import PlayerAvatar from '../../components/PlayerAvatar/PlayerAvatar';
 import Loading from '../../components/Loading/Loading';
 import Alert from '../../components/Alert/Alert';
 import './styles.css';
+import { FaTrash } from "react-icons/fa";
+
 
 const Draw = () => {
   const { players, loading, error } = useRatings();
@@ -11,6 +13,7 @@ const Draw = () => {
   const [playersPerTeam, setPlayersPerTeam] = useState(3);
   const [numberOfTeams, setNumberOfTeams] = useState(3);
   const [teams, setTeams] = useState([]);
+  const [playersOut, setPlayersOut] = useState([]);
   const [message, setMessage] = useState(null);
 
   const handlePlayerToggle = (playerId) => {
@@ -20,6 +23,30 @@ const Draw = () => {
       }
       return [...prev, playerId];
     });
+  };
+
+  const handleDeletePlayer = async (playerId, playerName) => {
+    if (!window.confirm(`Tem certeza que deseja excluir ${playerName}?`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/players/${playerId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao excluir jogador');
+      }
+
+      setMessage({ type: 'success', text: 'Jogador excluído com sucesso!' });
+      // Remove o jogador da lista de selecionados se estiver lá
+      setSelectedPlayers(prev => prev.filter(id => id !== playerId));
+      // Recarrega a página para atualizar a lista
+      window.location.reload();
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Erro ao excluir jogador' });
+    }
   };
 
   const handleSelectAll = () => {
@@ -62,6 +89,17 @@ const Draw = () => {
     return shuffled;
   };
 
+  const createMockPlayers = (count) => {
+  return Array.from({ length: count }, (_, i) => ({
+    id: `mock-${Date.now()}-${i}`,
+    name: `Jogador Aleatório ${i + 1}`,
+    stats: {
+      avgRating: 3
+    },
+    isMock: true
+  }));
+};
+
   const distributeTeams = (shuffle = false) => {
     const ppt = parseInt(playersPerTeam) || 0;
     const not = parseInt(numberOfTeams) || 0;
@@ -76,24 +114,14 @@ const Draw = () => {
 
     const totalPlayers = ppt * not;
     
-    if (selectedPlayers.length < totalPlayers) {
-      setMessage({
-        type: 'error',
-        text: `Você precisa selecionar pelo menos ${totalPlayers} jogadores (${ppt} por time × ${not} times)`
-      });
-      return;
-    }
-
-    if (selectedPlayers.length > totalPlayers) {
-      setMessage({
-        type: 'error',
-        text: `Você selecionou ${selectedPlayers.length} jogadores, mas precisa de exatamente ${totalPlayers} (${ppt} por time × ${not} times)`
-      });
-      return;
-    }
-
-    // Pegar jogadores selecionados
     let selected = players.filter(p => selectedPlayers.includes(p.id));
+
+    // Se faltar jogador, completa com mock
+    if (selected.length < totalPlayers) {
+      const missing = totalPlayers - selected.length;
+      const mockPlayers = createMockPlayers(missing);
+      selected = [...selected, ...mockPlayers];
+    }
     
     // Embaralhar completamente os jogadores primeiro
     selected = shuffleArray(selected);
@@ -227,14 +255,28 @@ const Draw = () => {
                   <div
                     key={player.id}
                     className={`player-select-card ${selectedPlayers.includes(player.id) ? 'selected' : ''}`}
-                    onClick={() => handlePlayerToggle(player.id)}
                   >
-                    <div className="player-checkbox">
-                      {selectedPlayers.includes(player.id) && '✓'}
+                    <div 
+                      className="player-select-content"
+                      onClick={() => handlePlayerToggle(player.id)}
+                    >
+                      <div className="player-checkbox">
+                        {selectedPlayers.includes(player.id) && '✓'}
+                      </div>
+                      <div className="player-select-info">
+                        <div className="player-select-name">{player.name}</div>
+                      </div>
                     </div>
-                    <div className="player-select-info">
-                      <div className="player-select-name">{player.name}</div>
-                    </div>
+                    <button
+                      className="btn-delete-player"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeletePlayer(player.id, player.name);
+                      }}
+                      title="Excluir jogador"
+                    >
+                      <FaTrash />
+                    </button>
                   </div>
                 ))}
               </div>
@@ -266,7 +308,7 @@ const Draw = () => {
                     {team.map(player => (
                       <div key={player.id} className="team-player">
                         <div className="team-player-info">
-                          <div className="team-player-name">{player.name}</div>
+                          {player.name} {player.isMock ? "(Aleatório)" : ""}
                         </div>
                       </div>
                     ))}
@@ -290,4 +332,4 @@ const Draw = () => {
   );
 };
 
-export default Draw;
+export default Draw; 
