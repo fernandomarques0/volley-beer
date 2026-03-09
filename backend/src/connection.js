@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export async function connectDB() {
-  const mongoUri = 'mongodb+srv://fernandmrqs0_db_user:pv3PnJzJBJlex18I@volley-beer-cluster.ncvsyvc.mongodb.net/?appName=volley-beer-cluster';
+  const mongoUri = process.env.MONGODB_URI
   
   if (!mongoUri) {
     throw new Error('MONGODB_URI não configurada nas variáveis de ambiente');
